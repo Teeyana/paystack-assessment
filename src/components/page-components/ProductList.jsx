@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -8,8 +11,16 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import axios from "axios";
-import { PaystackButton } from "react-paystack";
 import { Button } from "../ui/button";
+import dynamic from "next/dynamic";
+
+const PaystackButton = dynamic(
+  () => import("react-paystack").then((mod) => mod.PaystackButton), 
+  {
+    ssr: false,
+    loading: () => <p>Loading...</p>,
+  }
+);
 
 const products = [
   {
@@ -34,9 +45,21 @@ const products = [
     image: "/assets/shoe.jpeg",
   },
 ];
+
 const publicKey = process.env.NEXT_PUBLIC_public_key;
+
 export function ProductList() {
-  const customerEmail = localStorage.getItem("customer_email");
+  const [customerEmail, setCustomerEmail] = useState(null);
+  const [customer, setCustomer] = useState(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const email = window.localStorage.getItem("customer_email");
+      const customerCode = window.localStorage.getItem("customer");
+      setCustomerEmail(email);
+      setCustomer(customerCode);
+    }
+  }, []);
 
   const componentProps = {
     email: customerEmail,
@@ -48,13 +71,12 @@ export function ProductList() {
   };
 
   const handlePayment = async (price) => {
-    const customer = localStorage.getItem("customer");
     try {
-      let response = await axios.post(
+      const response = await axios.post(
         "https://api.paystack.co/paymentrequest",
         {
           customer,
-          amount: price,
+          amount: price * 100, 
         },
         {
           headers: {
@@ -64,9 +86,11 @@ export function ProductList() {
         }
       );
 
-      alert(response.data.message, "Check bottom of the page to view payment request");
+      alert(response.data.message);
     } catch (error) {
-      alert(error);
+      alert(
+        error.response?.data?.message || error.message || "An error occurred"
+      );
     }
   };
 
@@ -94,11 +118,13 @@ export function ProductList() {
             <PaystackButton
               className="bg-black text-white p-2 px-3 rounded-md"
               {...componentProps}
-              amount={product.price * 100}
+              amount={product.price * 100} // Convert to kobo
             >
               Make Payment
             </PaystackButton>
-            <Button onClick={()=>handlePayment(product.price)}>Request Payment</Button>
+            <Button onClick={() => handlePayment(product.price)}>
+              Request Payment
+            </Button>
           </CardFooter>
         </Card>
       ))}

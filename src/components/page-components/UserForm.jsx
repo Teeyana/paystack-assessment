@@ -1,7 +1,9 @@
+"use client";
+
 import { useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
+import { Button } from "../ui/button";
 import axios from "axios";
 
 export function UserForm() {
@@ -26,11 +28,14 @@ export function UserForm() {
           },
         }
       );
-      localStorage.setItem("customer", response.data.data.customer_code )
-      localStorage.setItem("customer_id", response.data.data.id )
-      localStorage.setItem("customer_email", response.data.data.email )
+      
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("customer", response.data.data.customer_code );
+        window.localStorage.setItem("customer_id", response.data.data.id );
+        window.localStorage.setItem("customer_email", response.data.data.email );
+      }
 
-      console.log(response)
+      console.log(response);
       alert(response.data.message);
     } catch (error) {
       alert(error);
