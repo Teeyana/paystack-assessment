@@ -89,7 +89,7 @@ export function ProductList() {
       alert(response.data.message);
     } catch (error) {
       alert(
-        error.response?.data?.message || error.message || "An error occurred"
+        "Create a user before making payment request"
       );
     }
   };

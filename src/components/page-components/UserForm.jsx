@@ -28,14 +28,17 @@ export function UserForm() {
           },
         }
       );
-      
+
       if (typeof window !== "undefined") {
-        window.localStorage.setItem("customer", response.data.data.customer_code );
-        window.localStorage.setItem("customer_id", response.data.data.id );
-        window.localStorage.setItem("customer_email", response.data.data.email );
+        window.localStorage.setItem("customer", response.data.data.customer_code);
+        window.localStorage.setItem("customer_id", response.data.data.id);
+        window.localStorage.setItem("customer_email", response.data.data.email);
       }
 
-      console.log(response);
+      if (typeof window !== "undefined") {
+        window.location.reload()
+      }
+
       alert(response.data.message);
     } catch (error) {
       alert(error);

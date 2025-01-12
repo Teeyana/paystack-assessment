@@ -33,7 +33,8 @@ export function PaymentHistory() {
       setTableData(response.data.data)
       alert(response.data.message);
     } catch (error) {
-      alert(error);
+      alert("Create a user before making payment history request"
+      );
     }
   };
 
