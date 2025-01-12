@@ -12,7 +12,7 @@
 ### Overview
 Teeyanah Store is a mini e-commerce store where users can register, buy an items, request payment request and check the request they have made previously. This project integrates 3 paystack api endpoints (Create Customer, Create Payment request and retreive payment request) and the react-paystack library. This project was built using NextJS, tailwind and local storage to store user credentials.
 
-<img src="/assets/readme-image.png" alt="readme-image" />
+<img src="/public/assets/readme-image.png" alt="readme-image" />
 
 ### Live link 
 
