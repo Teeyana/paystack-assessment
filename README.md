@@ -19,10 +19,10 @@ Teeyanah Store is a mini e-commerce store where users can register, buy an items
 https://paystack-assessment-psi.vercel.app/
 
 ### Features
-1. Create user using the create customer endpoint
-2. Make Payment using react-paystack library
-3. Create Payment request for a product using the Create payment endpoint
-4. Retreiving Payment requests using the list payment request endpoint and querying with the customer id stored in the local storage
+1. **Create user** using the create customer endpoint
+2. **Make Payment** using react-paystack library
+3. **Create Payment** request for a product using the Create payment endpoint
+4. **Retreiving Payment requests** using the list payment request endpoint and querying with the customer id stored in the local storage
 
 ### Project Structure
 ```
